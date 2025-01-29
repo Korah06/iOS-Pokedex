@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+protocol PokemonService {
+    func getPokemons(offset: Int) async throws -> PokemonListDTO
+    func getPokemon(id: String) async throws -> PokemonDTO
+}

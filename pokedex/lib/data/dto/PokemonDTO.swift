@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+struct PokemonDTO: Decodable,Identifiable {
+    let id: Int
+    let name: String
+    let url: String
+    let baseExperience: Int
+    let sprites:SpritesDTO
+}

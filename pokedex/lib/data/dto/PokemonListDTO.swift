@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+struct PokemonListDTO :Codable{
+    let count: Int
+    let results: [PokemonResumedDTO]
+}

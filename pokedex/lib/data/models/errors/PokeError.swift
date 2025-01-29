@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+enum PokeError: Error {
+    case invalidURL
+    case invalidResponse
+    case decodingFailed
+}

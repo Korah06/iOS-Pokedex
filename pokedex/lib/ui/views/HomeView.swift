@@ -9,24 +9,27 @@ import SwiftUI
 import SwiftData
 
 struct HomeView: View {
-    @State var vm:HomeVM = HomeVM()
+    @State var vm:HomeVM = HomeVM(pokemonService: PokemonServiceImpl())
     let columns = Array(repeating: GridItem(.flexible()), count: 2)
     
     var body: some View {
         
-        let pokemons = vm.pokemons
+        let pokemons = vm.truePokemons
         
         ScrollView{
             LazyVGrid(columns: columns){
-                ForEach(pokemons,id: \.self){ pokemon in
+                ForEach(pokemons ?? []){ pokemon in
                     ZStack{
-                        PokemonCard()
+                        PokemonCard(pokemon: pokemon)
                     }.listRowBackground(Color.backgroundApp)
-                        .scrollTransition{content, phase in content.opacity(phase.isIdentity ? 1 : 0.1).scaleEffect(x: phase.isIdentity ? 1 : 0.2, y: phase.isIdentity ? 1 : 0.2)
+                        .scrollTransition{content, phase in content.opacity(phase.isIdentity ? 1 : 0.1).scaleEffect(x: phase.isIdentity ? 1 : 0.7, y: phase.isIdentity ? 1 : 0.7)
                         }
                 }
             }.padding()
         }.scrollTargetBehavior(.viewAligned)
+            .task {
+                await vm.obtainPokemons()
+            }
     }
     
 }

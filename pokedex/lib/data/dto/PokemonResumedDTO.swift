@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+struct PokemonResumedDTO: Codable {
+    let name:String
+    let url:String
+}
