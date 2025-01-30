@@ -11,8 +11,9 @@ import Foundation
 class HomeVM {
     let pokemonService:PokemonService
     var pokemons : [String] = ["Pikachu", "Charizard","Bulbasaur","Charmander","Jigglypuff","Eevee","Nidoran","Raixhu","Mew","Mewtwo","Pichu", "Squirtle"]
-    var truePokemons: [PokemonDTO]? = nil
+    var truePokemons: [Pokemon]? = nil
     var pokemonsToLoad: PokemonListDTO? = nil
+    var pokemonCount: Int = 20
     
     init(pokemonService: PokemonService) {
         self.pokemonService = pokemonService
@@ -24,11 +25,15 @@ class HomeVM {
     
     public func obtainPokemons() async {
         do{
-            pokemonsToLoad = try await pokemonService.getPokemons(offset: pokemons.count)
-            for result in pokemonsToLoad?.results ?? [] {
+            pokemonsToLoad = try await pokemonService.getPokemons(offset: pokemonCount)
+            if(pokemonsToLoad?.results != nil){
+                truePokemons = []
+            }
+            for result in pokemonsToLoad!.results {
                 let pokemonDto = try await pokemonService.getPokemon(id: result.name)
                 truePokemons?.append(pokemonDto)
             }
+            print("Pokedex loaded")
         } catch PokeError.invalidURL {
             print("Invalid URL")
         }

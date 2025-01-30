@@ -15,7 +15,7 @@ class PokemonServiceImpl: PokemonService{
         decoder.keyDecodingStrategy = .convertFromSnakeCase
     }
     
-    func getPokemon(id: String) async throws -> PokemonDTO {
+    func getPokemon(id: String) async throws -> Pokemon {
         let endpoint = "\(urlBase)pokemon/\(id)"
         
         guard let url = URL(string: endpoint) else {
@@ -29,9 +29,10 @@ class PokemonServiceImpl: PokemonService{
         }
         
         do {
-            let pokemonDTO = try decoder.decode(PokemonDTO.self, from: data)
+            let pokemonDTO = try decoder.decode(Pokemon.self, from: data)
             return pokemonDTO
-        } catch {
+        } catch let decodingError {
+            print("❌ Error de decodificación:", decodingError)
             throw PokeError.decodingFailed
         }
     }

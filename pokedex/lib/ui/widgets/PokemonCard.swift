@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct PokemonCard: View {
-    let pokemon : PokemonDTO
+    let pokemon : Pokemon
     var body: some View {
-        let imageUrl = pokemon.sprites.frontDefault
+        let imageUrl = getImage(pokemon.sprites)
         
         ZStack{
             AsyncImage(url: URL(string:imageUrl)){ image in
@@ -20,28 +20,56 @@ struct PokemonCard: View {
             }
             VStack{
                 Spacer()
-                Text("aasdas").foregroundStyle(.white).font(.title).bold().padding().frame(maxWidth: .infinity).background(.white.opacity(0.25))
+                Text(pokemon.name).foregroundStyle(.white).font(.title).bold().padding().frame(maxWidth: .infinity).background(.white.opacity(0.25))
             }
         }.frame(height: 200).cornerRadius(32)
     }
-    
+    func getImage(_ sprites : Sprites) -> String {
+        if(sprites.frontDefault != nil){
+            return sprites.frontDefault!
+        }
+        if(sprites.backDefault != nil){
+            return sprites.backDefault!
+        }
+        if(sprites.frontShiny != nil){
+            return sprites.frontShiny!
+        }
+        return ""
+    }
 }
 
 #Preview {
-    PokemonCard(pokemon: PokemonDTO(
-        id: 1,
-        name: "Pikachu",
-        url: "a",
-        baseExperience: 128,
-        sprites: SpritesDTO(
-            backDefault: nil,
-            backFemale: nil,
-            backShiny: nil,
-            backShinyFemale: nil,
-            frontDefault: "https://example.com/front_default.png",
-            frontFemale: nil,
-            frontShiny: "https://example.com/front_shiny.png",
-            frontShinyFemale: nil
+    let samplePokemon = Pokemon(
+            id: 35,
+            name: "Clefairy",
+            baseExperience: 113,
+            height: 6,
+            isDefault: true,
+            order: 56,
+            weight: 75,
+            abilities: [AbilityEntry(isHidden: true, slot: 3, ability: NamedAPIResource(name: "friend-guard", url: ""))],
+            forms: [NamedAPIResource(name: "clefairy", url: "")],
+            gameIndices: [],
+            heldItems: [],
+            locationAreaEncounters: "",
+            moves: [],
+            species: NamedAPIResource(name: "clefairy", url: ""),
+            sprites: Sprites(
+                frontDefault: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/35.png",
+                frontShiny: nil,
+                backDefault: nil,
+                backShiny: nil,
+                other: OtherSprites(
+                    officialArtwork: OfficialArtwork(
+                        frontDefault: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/35.png",
+                        frontShiny: nil
+                    )
+                )
+            ),
+            cries: Cries(latest: "", legacy: ""),
+            stats: [StatEntry(baseStat: 35, effort: 0, stat: NamedAPIResource(name: "speed", url: ""))],
+            types: [TypeEntry(slot: 1, type: NamedAPIResource(name: "fairy", url: ""))],
+            pastTypes: []
         )
-    ))
+    PokemonCard(pokemon: samplePokemon)
 }
