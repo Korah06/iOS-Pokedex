@@ -52,19 +52,12 @@ struct PokemonCard: View {
             gameIndices: [],
             heldItems: [],
             locationAreaEncounters: "",
-            moves: [],
             species: NamedAPIResource(name: "clefairy", url: ""),
             sprites: Sprites(
                 frontDefault: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/35.png",
                 frontShiny: nil,
                 backDefault: nil,
-                backShiny: nil,
-                other: OtherSprites(
-                    officialArtwork: OfficialArtwork(
-                        frontDefault: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/35.png",
-                        frontShiny: nil
-                    )
-                )
+                backShiny: nil
             ),
             cries: Cries(latest: "", legacy: ""),
             stats: [StatEntry(baseStat: 35, effort: 0, stat: NamedAPIResource(name: "speed", url: ""))],

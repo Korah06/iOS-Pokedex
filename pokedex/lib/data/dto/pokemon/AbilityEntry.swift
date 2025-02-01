@@ -12,10 +12,6 @@ struct AbilityEntry: Decodable {
     let slot: Int
     let ability: NamedAPIResource
 
-    enum CodingKeys: String, CodingKey {
-        case isHidden = "is_hidden"
-        case slot, ability
-    }
 }
 
 

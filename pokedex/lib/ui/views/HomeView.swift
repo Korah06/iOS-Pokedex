@@ -9,11 +9,11 @@ import SwiftUI
 import SwiftData
 
 struct HomeView: View {
+
     @State var vm:HomeVM = HomeVM(pokemonService: PokemonServiceImpl())
     let columns = Array(repeating: GridItem(.flexible()), count: 2)
     
     var body: some View {
-        
         let pokemons = vm.truePokemons
         
         ScrollView{
