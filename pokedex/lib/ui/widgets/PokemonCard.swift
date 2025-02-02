@@ -8,61 +8,69 @@
 import SwiftUI
 
 struct PokemonCard: View {
-    let pokemon : Pokemon
+    @State var isLoading = true
+    let pokemon : PokemonDTO
     var body: some View {
-        let imageUrl = getImage(pokemon.sprites)
+        let imageUrl: String? = getImage(pokemon.sprites)
         
         ZStack{
-            AsyncImage(url: URL(string:imageUrl)){ image in
+            Circle().foregroundStyle(.secondary).opacity(0.5)
+            AsyncImage(url: URL(string:imageUrl ?? "")){ image in
                 image.resizable().aspectRatio(contentMode: .fit)
             } placeholder:{
-                Circle().foregroundStyle(.secondary)
+                if imageUrl == nil{
+                    Text("Image Not Found")
+                } else {
+                    ProgressView().progressViewStyle(CircularProgressViewStyle(tint: .white)).scaleEffect(3)
+                }
+                
             }
             VStack{
                 Spacer()
-                Text(pokemon.name).foregroundStyle(.white).font(.title).bold().padding().frame(maxWidth: .infinity).background(.white.opacity(0.25))
+                Text(pokemon.name).foregroundStyle(.white).font(.title).bold().padding().frame(maxWidth: .infinity).background(.white.opacity(0.05))
             }
-        }.frame(height: 200).cornerRadius(32)
+        }.frame(height: 300).cornerRadius(32)
     }
-    func getImage(_ sprites : Sprites) -> String {
+    func getImage(_ sprites : SpritesDTO) -> String? {
         if(sprites.frontDefault != nil){
             return sprites.frontDefault!
-        }
-        if(sprites.backDefault != nil){
-            return sprites.backDefault!
         }
         if(sprites.frontShiny != nil){
             return sprites.frontShiny!
         }
-        return ""
+        if(sprites.backDefault != nil){
+            return sprites.backDefault!
+        }
+        
+        return nil
     }
 }
 
 #Preview {
-    let samplePokemon = Pokemon(
-            id: 35,
-            name: "Clefairy",
-            baseExperience: 113,
-            height: 6,
-            isDefault: true,
-            order: 56,
-            weight: 75,
-            abilities: [AbilityEntry(isHidden: true, slot: 3, ability: NamedAPIResource(name: "friend-guard", url: ""))],
-            forms: [NamedAPIResource(name: "clefairy", url: "")],
-            gameIndices: [],
-            heldItems: [],
-            locationAreaEncounters: "",
-            species: NamedAPIResource(name: "clefairy", url: ""),
-            sprites: Sprites(
-                frontDefault: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/35.png",
-                frontShiny: nil,
-                backDefault: nil,
-                backShiny: nil
-            ),
-            cries: Cries(latest: "", legacy: ""),
-            stats: [StatEntry(baseStat: 35, effort: 0, stat: NamedAPIResource(name: "speed", url: ""))],
-            types: [TypeEntry(slot: 1, type: NamedAPIResource(name: "fairy", url: ""))],
-            pastTypes: []
-        )
+    let samplePokemon = PokemonDTO(
+        id: 35,
+        name: "Clefairy",
+        baseExperience: 113,
+        height: 6,
+        isDefault: true,
+        order: 56,
+        weight: 75,
+        abilities: [AbilityEntryDTO(isHidden: true, slot: 3, ability: NamedAPIResourceDTO(name: "friend-guard", url: ""))],
+        forms: [NamedAPIResourceDTO(name: "clefairy", url: "")],
+        gameIndices: [],
+        heldItems: [],
+        locationAreaEncounters: "",
+        species: NamedAPIResourceDTO(name: "clefairy", url: ""),
+        sprites: SpritesDTO(
+            frontDefault: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/35.png",
+            frontShiny: nil,
+            backDefault: nil,
+            backShiny: nil
+        ),
+        cries: Cries(latest: "", legacy: ""),
+        stats: [StatEntry(baseStat: 35, effort: 0, stat: NamedAPIResourceDTO(name: "speed", url: ""))],
+        types: [TypeEntry(slot: 1, type: NamedAPIResourceDTO(name: "fairy", url: ""))],
+        pastTypes: []
+    )
     PokemonCard(pokemon: samplePokemon)
 }

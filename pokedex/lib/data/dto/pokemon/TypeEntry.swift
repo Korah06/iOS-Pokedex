@@ -7,5 +7,5 @@
 
 struct TypeEntry: Decodable {
     let slot: Int
-    let type: NamedAPIResource
+    let type: NamedAPIResourceDTO
 }

@@ -5,8 +5,8 @@
 //  Created by Mario Espasa Planells on 30/1/25.
 //
 
-struct GameIndex: Decodable {
+struct GameIndexDTO: Decodable {
     let gameIndex: Int
-    let version: NamedAPIResource
+    let version: NamedAPIResourceDTO
 
 }

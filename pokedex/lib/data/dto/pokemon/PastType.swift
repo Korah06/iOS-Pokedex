@@ -6,6 +6,6 @@
 //
 
 struct PastType: Decodable {
-    let generation: NamedAPIResource
+    let generation: NamedAPIResourceDTO
     let types: [TypeEntry]
 }

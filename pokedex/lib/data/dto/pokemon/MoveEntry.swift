@@ -6,7 +6,7 @@
 //
 
 struct MoveEntry: Decodable {
-    let move: NamedAPIResource
+    let move: NamedAPIResourceDTO
     let versionGroupDetails: [VersionGroupDetail]?
 
     enum CodingKeys: String, CodingKey {

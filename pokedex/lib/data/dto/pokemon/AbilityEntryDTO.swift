@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct AbilityEntry: Decodable {
+struct AbilityEntryDTO: Decodable {
     let isHidden: Bool?
     let slot: Int
-    let ability: NamedAPIResource
+    let ability: NamedAPIResourceDTO
 
 }
 

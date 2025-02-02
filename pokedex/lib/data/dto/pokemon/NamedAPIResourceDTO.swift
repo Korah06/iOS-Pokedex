@@ -5,7 +5,7 @@
 //  Created by Mario Espasa Planells on 30/1/25.
 //
 
-struct NamedAPIResource: Decodable {
+struct NamedAPIResourceDTO: Decodable {
     let name: String
     let url: String
 }

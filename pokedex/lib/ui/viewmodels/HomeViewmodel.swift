@@ -11,7 +11,7 @@ import Foundation
 class HomeVM {
     let pokemonService:PokemonService
     var pokemons : [String] = ["Pikachu", "Charizard","Bulbasaur","Charmander","Jigglypuff","Eevee","Nidoran","Raixhu","Mew","Mewtwo","Pichu", "Squirtle"]
-    var truePokemons: [Pokemon]? = nil
+    var truePokemons: [PokemonDTO]? = nil
     var pokemonsToLoad: PokemonListDTO? = nil
     var pokemonCount: Int = 20
     

@@ -8,6 +8,6 @@
 struct StatEntry: Decodable {
     let baseStat: Int?
     let effort: Int
-    let stat: NamedAPIResource
+    let stat: NamedAPIResourceDTO
 
 }

@@ -7,8 +7,8 @@
 
 struct VersionGroupDetail: Decodable {
     let levelLearnedAt: Int
-    let versionGroup: NamedAPIResource
-    let moveLearnMethod: NamedAPIResource
+    let versionGroup: NamedAPIResourceDTO
+    let moveLearnMethod: NamedAPIResourceDTO
 
     enum CodingKeys: String, CodingKey {
         case levelLearnedAt = "level_learned_at"
