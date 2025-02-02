@@ -9,12 +9,18 @@ import SwiftUI
 
 struct PokemonCard: View {
     @State var isLoading = true
-    let pokemon : PokemonDTO
+    let pokemon : Pokemon
     var body: some View {
         let imageUrl: String? = getImage(pokemon.sprites)
         
         ZStack{
-            Circle().foregroundStyle(.secondary).opacity(0.5)
+            Circle().fill(
+                LinearGradient(
+                    gradient: Gradient(colors: pokemon.getColors()),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            ).opacity(0.5)
             AsyncImage(url: URL(string:imageUrl ?? "")){ image in
                 image.resizable().aspectRatio(contentMode: .fit)
             } placeholder:{
@@ -27,11 +33,11 @@ struct PokemonCard: View {
             }
             VStack{
                 Spacer()
-                Text(pokemon.name).foregroundStyle(.white).font(.title).bold().padding().frame(maxWidth: .infinity).background(.white.opacity(0.05))
+                Text(pokemon.name).foregroundStyle(.gray).font(.title).bold().padding().frame(maxWidth: .infinity).background(.white.opacity(0.05))
             }
         }.frame(height: 300).cornerRadius(32)
     }
-    func getImage(_ sprites : SpritesDTO) -> String? {
+    func getImage(_ sprites : Sprites) -> String? {
         if(sprites.frontDefault != nil){
             return sprites.frontDefault!
         }
@@ -47,7 +53,7 @@ struct PokemonCard: View {
 }
 
 #Preview {
-    let samplePokemon = PokemonDTO(
+    let samplePokemon = Pokemon(dto: PokemonDTO(
         id: 35,
         name: "Clefairy",
         baseExperience: 113,
@@ -67,10 +73,8 @@ struct PokemonCard: View {
             backDefault: nil,
             backShiny: nil
         ),
-        cries: Cries(latest: "", legacy: ""),
-        stats: [StatEntry(baseStat: 35, effort: 0, stat: NamedAPIResourceDTO(name: "speed", url: ""))],
-        types: [TypeEntry(slot: 1, type: NamedAPIResourceDTO(name: "fairy", url: ""))],
-        pastTypes: []
-    )
+        stats: [StatEntryDTO(baseStat: 35, effort: 0, stat: NamedAPIResourceDTO(name: "speed", url: ""))],
+        types: [TypeEntryDTO(slot: 1, type: NamedAPIResourceDTO(name: "fairy", url: ""))]
+    ))
     PokemonCard(pokemon: samplePokemon)
 }

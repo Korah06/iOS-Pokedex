@@ -14,7 +14,7 @@ struct HomeView: View {
     let columns = Array(repeating: GridItem(.flexible()), count: 2)
     
     var body: some View {
-        let pokemons = vm.truePokemons
+        let pokemons = vm.pokemons
         
         ScrollView{
             LazyVGrid(columns: columns){

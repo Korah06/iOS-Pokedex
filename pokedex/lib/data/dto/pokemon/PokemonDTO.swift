@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PokemonDTO: Decodable,Identifiable {
+struct PokemonDTO: Decodable {
     let id: Int
     let name: String
     let baseExperience: Int?
@@ -22,8 +22,6 @@ struct PokemonDTO: Decodable,Identifiable {
     let locationAreaEncounters: String?
     let species: NamedAPIResourceDTO
     let sprites: SpritesDTO
-    let cries: Cries
-    let stats: [StatEntry]
-    let types: [TypeEntry]
-    let pastTypes: [PastType]
+    let stats: [StatEntryDTO]
+    let types: [TypeEntryDTO]
 }

@@ -10,28 +10,24 @@ import Foundation
 @Observable
 class HomeVM {
     let pokemonService:PokemonService
-    var pokemons : [String] = ["Pikachu", "Charizard","Bulbasaur","Charmander","Jigglypuff","Eevee","Nidoran","Raixhu","Mew","Mewtwo","Pichu", "Squirtle"]
-    var truePokemons: [PokemonDTO]? = nil
-    var pokemonsToLoad: PokemonListDTO? = nil
-    var pokemonCount: Int = 20
+    var pokemons: [Pokemon]? = nil
+    var pokemonsList: PokemonListDTO? = nil
+    var pokemonCount: Int = 0
     
     init(pokemonService: PokemonService) {
         self.pokemonService = pokemonService
     }
     
-    public func addPokemon() {
-        pokemons.append("Clefairy")
-    }
-    
     public func obtainPokemons() async {
         do{
-            pokemonsToLoad = try await pokemonService.getPokemons(offset: pokemonCount)
-            if(pokemonsToLoad?.results != nil){
-                truePokemons = []
+            pokemonCount += 20
+            pokemonsList = try await pokemonService.getPokemons(offset: pokemonCount)
+            if(pokemonsList?.results != nil){
+                pokemons = []
             }
-            for result in pokemonsToLoad!.results {
-                let pokemonDto = try await pokemonService.getPokemon(id: result.name)
-                truePokemons?.append(pokemonDto)
+            for result in pokemonsList!.results {
+                let pokemon:Pokemon = try await pokemonService.getPokemon(id: result.name)
+                pokemons?.append(pokemon)
             }
             print("Pokedex loaded")
         } catch PokeError.invalidURL {
