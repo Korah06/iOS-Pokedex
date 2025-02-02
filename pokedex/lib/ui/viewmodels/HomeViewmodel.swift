@@ -22,7 +22,7 @@ class HomeVM {
         do{
             pokemonCount += 20
             pokemonsList = try await pokemonService.getPokemons(offset: pokemonCount)
-            if(pokemonsList?.results != nil){
+            if pokemonsList?.results != nil && pokemons == nil {
                 pokemons = []
             }
             for result in pokemonsList!.results {

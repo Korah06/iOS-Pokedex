@@ -23,6 +23,12 @@ struct HomeView: View {
                         PokemonCard(pokemon: pokemon)
                     }.listRowBackground(Color.backgroundApp)
                         .scrollTransition{content, phase in content.opacity(phase.isIdentity ? 1 : 0.1).scaleEffect(x: phase.isIdentity ? 1 : 0.7, y: phase.isIdentity ? 1 : 0.7)
+                        }.onAppear {
+                            if let lastPokemon = pokemons?.last, pokemon.id == lastPokemon.id {
+                                Task {
+                                    await vm.obtainPokemons()
+                                }
+                            }
                         }
                 }
             }.padding()
