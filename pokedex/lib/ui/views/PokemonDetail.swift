@@ -8,18 +8,36 @@
 import SwiftUI
 
 struct PokemonDetail: View {
-    let idPokemon : String
+    let pokemon : Pokemon
     var body: some View {
         VStack {
-                    Text(idPokemon)
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding()
+            let imageUrl: String? = getImage(pokemon.sprites)
+            AsyncImage(url: URL(string:imageUrl ?? "")){ image in
+                image.resizable().aspectRatio(contentMode: .fit)
+            } placeholder:{
+                if imageUrl == nil{
+                    Text("Image Not Found")
+                } else {
+                    ProgressView().progressViewStyle(CircularProgressViewStyle(tint: .white)).scaleEffect(3)
                 }
-                .frame(width: 150, height: 100)
-                .background(Color.blue)
-                .cornerRadius(10)
-                .shadow(radius: 5)
+            }
+            Text(pokemon.name).fontWeight(.bold).font(.title).frame(maxWidth: .infinity).background(.white.opacity(0.25))
+            Spacer()
+        }
+    }
+    
+    func getImage(_ sprites : Sprites) -> String? {
+        if(sprites.frontDefault != nil){
+            return sprites.frontDefault!
+        }
+        if(sprites.frontShiny != nil){
+            return sprites.frontShiny!
+        }
+        if(sprites.backDefault != nil){
+            return sprites.backDefault!
+        }
+        
+        return nil
     }
 }
 
@@ -47,5 +65,5 @@ struct PokemonDetail: View {
         stats: [StatEntryDTO(baseStat: 35, effort: 0, stat: NamedAPIResourceDTO(name: "speed", url: ""))],
         types: [TypeEntryDTO(slot: 1, type: NamedAPIResourceDTO(name: "fairy", url: ""))]
     ))
-    PokemonDetail(idPokemon:"samplePokemon")
+    PokemonDetail(pokemon:samplePokemon)
 }

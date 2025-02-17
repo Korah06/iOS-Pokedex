@@ -29,7 +29,6 @@ struct PokemonCard: View {
                 } else {
                     ProgressView().progressViewStyle(CircularProgressViewStyle(tint: .white)).scaleEffect(3)
                 }
-                
             }
             VStack{
                 Spacer()
