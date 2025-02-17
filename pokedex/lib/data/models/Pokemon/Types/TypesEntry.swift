@@ -5,11 +5,14 @@
 //  Created by Mario Espasa Planells on 2/2/25.
 //
 
-class TypesEntry{
+import Foundation
+
+@Observable
+class TypesEntry: Identifiable {
     let slot: Int
     let type: NamedApiResource
-    
-    init(dto:TypeEntryDTO){
+
+    init(dto: TypeEntryDTO) {
         self.slot = dto.slot
         self.type = NamedApiResource(dto: dto.type)
     }

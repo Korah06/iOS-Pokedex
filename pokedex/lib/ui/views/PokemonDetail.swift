@@ -22,6 +22,20 @@ struct PokemonDetail: View {
                 }
             }
             Text(pokemon.name).fontWeight(.bold).font(.title).frame(maxWidth: .infinity).background(.white.opacity(0.25))
+            HStack {
+                let types = pokemon.types
+                ForEach(Array(types.enumerated()), id: \.1.id) { index, type in
+                    Text(type.type.name)
+                        .font(.headline)
+                        .padding()
+                        .frame(maxWidth: 100)
+                        .background(pokemon.getColors()[index].opacity(0.7))
+                        .cornerRadius(10)
+                        .shadow(radius: 5)
+                        .padding()
+                }
+                
+            }
             Spacer()
         }
     }
